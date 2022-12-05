@@ -1,0 +1,21 @@
+<div class="product-list">
+    <div class="product-item" *ngFor="let product of productList">
+        <div class="product-item-bg">
+            <img src="{{ product.url }}" alt="{{ product.name }}">
+        </div>
+        <div class="product-item-name-price">
+            <div>{{ product.name }}</div>
+            <div>${{ product.price }}</div>
+        </div>
+        <div class="product-item-select-quantity">
+         <select (ngModelChange)="onSelectQuantity()"  [(ngModel)]="quantity">
+             <option *ngFor="let cur of defaultQuantity" [ngValue]="cur">
+                {{ cur }}
+              </option>
+         </select>
+        </div>
+        <button class="btn-add-to-card" (click)="onAddToCart(product)">
+           Add to card
+        </button>
+    </div>
+</div>

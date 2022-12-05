@@ -1,0 +1,54 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgb(66, 66, 198);
+  padding: 20px 45px;
+  margin-bottom: 20px;
+
+  .app-header-name {
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+
+  }
+
+  .app-header-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    a {
+
+      color: white;
+      font-weight: bold;
+      text-decoration: unset;
+    }
+  }
+
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
