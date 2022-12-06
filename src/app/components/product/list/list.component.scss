@@ -12,9 +12,9 @@
     .product-item-bg {
       width: 100%;
       height: 300px;
-    
+
       overflow: hidden;
-      
+
       img {
         background-size: cover;
         width: 100%;
@@ -22,30 +22,30 @@
       }
     }
 
-    .product-item-name-price{
+    .product-item-name-price {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .product-item-select-quantity{
-      select{
+    .product-item-select-quantity {
+      select {
         width: 100%;
         min-height: 35px;
       }
     }
 
-    .btn-add-to-card{
+    .btn-add-to-card {
       font-size: 14px;
       background: rgb(66, 66, 198);
       border: none;
-      width:  100%;
+      width: 100%;
       border-radius: 5px;
       padding: 10px 0;
       color: white;
       font-weight: bold;
       cursor: pointer;
-      &:focus{
+      &:focus {
         outline: none;
       }
     }

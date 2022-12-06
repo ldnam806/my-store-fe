@@ -1,3 +1,83 @@
-<div>
-    I'm cart
+<div class="cart-container" *ngIf="carts.length > 0">
+  <div>
+    <div class="cart-list">
+      <div class="cart-item" *ngFor="let cart of carts">
+        <div class="cart-product-img">
+          <img src="{{ cart.url }}" alt="{{ cart.name }}" />
+        </div>
+        <div class="cart-price-name">
+          <span class="cart-name">{{ cart.name }}</span>
+          <div class="cart-price">
+            <span> Quantity: {{ cart.quantity }} </span>
+
+            <span> Price {{ cart.price }} $ </span>
+          </div>
+          <div class="btn-action">
+            <button class="btn-add">+</button>
+            <button class="btn-dec">-</button>
+          </div>
+          <button class="btn-remove">Remove</button>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 30px">Sumtotal : {{ total }} $</div>
+  </div>
+
+  <div>
+    <form [formGroup]="angForm">
+      <div class="form-group">
+        <div class="form-wrapper">
+          <span class="form-label">Full Name</span>
+          <input class="form-control-input" formControlName="name" />
+        </div>
+        <div
+          class="error-message"
+          *ngIf="
+            angForm.controls['name']?.invalid &&
+            (angForm.controls['name']?.dirty ||
+              angForm.controls['name']?.touched)
+          "
+        >
+          Name is required.
+        </div>
+        <div class="form-wrapper">
+          <span class="form-label"> Address </span>
+          <input class="form-control-input" formControlName="address" />
+        </div>
+        <div
+          class="error-message"
+          *ngIf="
+            angForm.controls['address']?.invalid &&
+            (angForm.controls['address']?.dirty ||
+              angForm.controls['address']?.touched)
+          "
+        >
+          Address is required.
+        </div>
+        <div class="form-wrapper">
+          <span class="form-label"> Card Number </span>
+          <input class="form-control-input" formControlName="card-number" />
+        </div>
+        <div
+          class="error-message"
+          *ngIf="
+            angForm.controls['card-number']?.invalid &&
+            (angForm.controls['card-number']?.dirty ||
+              angForm.controls['card-number']?.touched)
+          "
+        >
+          Card Number is required.
+        </div>
+      </div>
+      <button
+        type="submit"
+        [disabled]="angForm.pristine || angForm.invalid"
+        class="btn-submit"
+      >
+        Checkout
+      </button>
+    </form>
+  </div>
 </div>
+
+<div *ngIf="carts.length <= 0">Empty in cart list</div>
