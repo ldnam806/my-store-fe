@@ -2,31 +2,36 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user';
+import { Checkout } from '../models/Checkout';
 import { ProductInCart } from '../models/productInCart';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
   myCart: ProductInCart[] = [];
-  user: User = {
+  info: Checkout = {
     totalPrice: 0,
-    fullName: '',
+    fullname: '',
     address: '',
-    creditNumber: '',
+    cardNumber: '',
   };
   private personURL = 'http://localhost:3000/products';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient ,private toastr: ToastrService) {}
 
   getProductList(): Observable<Product[]> {
     return this.http.get<Product[]>(this.personURL);
   }
-  getUser() {
-    return this.user;
+  getInfo() {
+    return this.info;
+  }
+  saveCheckout(data : Checkout){
+       this.info = {...data}
+       this.toastr.success('Success', 'Save checkout successfully!');
   }
 
-  getProductById(id: number): Observable<Product[]> {
+  getProductById(id:string): Observable<Product[]> {
     const params = {
       id,
     };
@@ -47,16 +52,38 @@ export class ProductService {
     } else {
       this.myCart.push({ ...product, quantity: 1 });
     }
+    this.toastr.success('Success', 'Add product to cart successfully!');
   }
   sumTotal() {
-    const total = this.myCart.reduce(
+    return [...this.myCart].reduce(
       (accumulator, currentValue) =>
-        accumulator + currentValue.price * currentValue.quantity,
+        accumulator + (currentValue.price * currentValue.quantity),
       0
     );
-    return Number(total.toFixed(1));
   }
-  remove(id: number) {
-    // const index = this.myCart.findIndex((i: Product) => i.id === id);
+  remove(index: number) {
+    this.myCart.splice(index , 1)
+    this.toastr.success('Success', 'Remove product successfully!');
+  
+  }
+  resetAll() {
+    this.myCart = [];
+    this.info = {
+      totalPrice: 0,
+      fullname: '',
+      address: '',
+      cardNumber: '',
+    }
+  }
+  augmentPrtoduct(index: number) {
+    this.myCart[index].quantity = this.myCart[index].quantity + 1;
+    this.sumTotal()
+  }
+  decreaseProduct(index: number){
+    this.myCart[index].quantity = this.myCart[index].quantity - 1;
+     if(this.myCart[index].quantity < 1){
+      this.myCart.splice(index , 1)
+     }
+     this.sumTotal()
   }
 }

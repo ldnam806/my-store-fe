@@ -1,7 +1,7 @@
 <div class="cart-container" *ngIf="carts.length > 0">
   <div>
     <div class="cart-list">
-      <div class="cart-item" *ngFor="let cart of carts">
+      <div class="cart-item" *ngFor="let cart of carts;let i = index">
         <div class="cart-product-img">
           <img src="{{ cart.url }}" alt="{{ cart.name }}" />
         </div>
@@ -12,15 +12,15 @@
 
             <span> Price {{ cart.price }} $ </span>
           </div>
-          <div class="btn-action">
-            <button class="btn-add">+</button>
-            <button class="btn-dec">-</button>
+          <div *ngIf="cart.id" class="btn-action">
+            <button (click)="onAgmentPrtoduct(i)" class="btn-add">+</button>
+            <button (click)="onDecreaseProductPrtoduct(i)" class="btn-dec">-</button>
           </div>
-          <button class="btn-remove">Remove</button>
+          <button (click)="onRemoveProduct(i)"  class="btn-remove">Remove</button>
         </div>
       </div>
     </div>
-    <div style="margin-top: 30px">Sumtotal : {{ total }} $</div>
+    <div style="margin-top: 30px">Sumtotal : {{ sum() }} $</div>
   </div>
 
   <div>
@@ -73,6 +73,7 @@
         type="submit"
         [disabled]="angForm.pristine || angForm.invalid"
         class="btn-submit"
+        (click)="onSubmit()"
       >
         Checkout
       </button>

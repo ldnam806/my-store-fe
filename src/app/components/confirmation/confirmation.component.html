@@ -1,0 +1,12 @@
+<div class="confirm-container">
+  <div>
+    <span>
+        Hello <b> {{ data.fullname }} </b> your order successfully
+      </span>
+      <div><b> Total </b> : {{ data.totalPrice }} $</div>
+      <div><b> Address </b> : {{ data.address }}</div>
+      <div><b> By card number </b> : {{ data.cardNumber }}</div>
+      <span (click)="backToShopping()" class="continue-shopping">Continue Shopping</span>
+  </div>
+ 
+</div>
