@@ -1,6 +1,17 @@
 # MyStore
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.2.
+This is basically shopping cart application, you can view all also detail of product with normal function add or remove product you want to order, and checkout with total amount of products also infomation etc name address and cart number
+
+
+# Structure source code
+
+`src/app/components` including all components of this aplication, each component had different file module, style, test file
+
+`src/app/model` defined type of data you want to use for application
+
+`src/app/services` defined services of this application use for fetching data or updating data
+
+`src/app/assets` including all images, root style and etc ,... 
 
 ## Development server
 

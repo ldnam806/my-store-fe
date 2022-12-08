@@ -1,7 +1,7 @@
 <div class="cart-container" *ngIf="carts.length > 0">
   <div>
     <div class="cart-list">
-      <div class="cart-item" *ngFor="let cart of carts;let i = index">
+      <div class="cart-item" *ngFor="let cart of carts; let i = index">
         <div class="cart-product-img">
           <img src="{{ cart.url }}" alt="{{ cart.name }}" />
         </div>
@@ -14,9 +14,13 @@
           </div>
           <div *ngIf="cart.id" class="btn-action">
             <button (click)="onAgmentPrtoduct(i)" class="btn-add">+</button>
-            <button (click)="onDecreaseProductPrtoduct(i)" class="btn-dec">-</button>
+            <button (click)="onDecreaseProductPrtoduct(i)" class="btn-dec">
+              -
+            </button>
           </div>
-          <button (click)="onRemoveProduct(i)"  class="btn-remove">Remove</button>
+          <button (click)="onRemoveProduct(i)" class="btn-remove">
+            Remove
+          </button>
         </div>
       </div>
     </div>
@@ -56,17 +60,41 @@
         </div>
         <div class="form-wrapper">
           <span class="form-label"> Card Number </span>
-          <input class="form-control-input" formControlName="card-number" />
+          <input (ngModelChange)="logCardNumber($event)" class="form-control-input" formControlName="card-number" />
         </div>
         <div
           class="error-message"
           *ngIf="
-            angForm.controls['card-number']?.invalid &&
-            (angForm.controls['card-number']?.dirty ||
-              angForm.controls['card-number']?.touched)
+          angForm.controls['card-number']?.errors?.['required'] &&
+          (angForm.controls['card-number']?.dirty ||
+            angForm.controls['card-number']?.touched)
           "
         >
           Card Number is required.
+        </div>
+        <div
+          class="error-message"
+          *ngIf="angForm.controls['card-number']?.errors?.['pattern'] &&
+          (angForm.controls['card-number']?.dirty ||
+            angForm.controls['card-number']?.touched) "
+        >
+          Card Number type is number
+        </div>
+        <div
+          class="error-message"
+          *ngIf="angForm.controls['card-number']?.errors?.['minlength'] &&
+        (angForm.controls['card-number']?.dirty ||
+          angForm.controls['card-number']?.touched) "
+        >
+          Min length is 8 digits
+        </div>
+        <div
+          class="error-message"
+          *ngIf="angForm.controls['card-number']?.errors?.['maxlength'] &&
+      (angForm.controls['card-number']?.dirty ||
+        angForm.controls['card-number']?.touched) "
+        >
+          Max length is 16 digits
         </div>
       </div>
       <button

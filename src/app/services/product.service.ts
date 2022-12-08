@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ProductService {
   myCart: ProductInCart[] = [];
+  currentCart: string = '';
   info: Checkout = {
     totalPrice: 0,
     fullname: '',
@@ -18,7 +19,7 @@ export class ProductService {
     cardNumber: '',
   };
   private personURL = 'http://localhost:3000/products';
-  constructor(private http: HttpClient ,private toastr: ToastrService) {}
+  constructor(private http: HttpClient, private toastr: ToastrService) {}
 
   getProductList(): Observable<Product[]> {
     return this.http.get<Product[]>(this.personURL);
@@ -26,12 +27,12 @@ export class ProductService {
   getInfo() {
     return this.info;
   }
-  saveCheckout(data : Checkout){
-       this.info = {...data}
-       this.toastr.success('Success', 'Save checkout successfully!');
+  saveCheckout(data: Checkout) {
+    this.info = { ...data };
+    this.toastr.success('Success', 'Save checkout successfully!');
   }
 
-  getProductById(id:string): Observable<Product[]> {
+  getProductById(id: string): Observable<Product[]> {
     const params = {
       id,
     };
@@ -57,14 +58,13 @@ export class ProductService {
   sumTotal() {
     return [...this.myCart].reduce(
       (accumulator, currentValue) =>
-        accumulator + (currentValue.price * currentValue.quantity),
+        accumulator + currentValue.price * currentValue.quantity,
       0
     );
   }
   remove(index: number) {
-    this.myCart.splice(index , 1)
+    this.myCart.splice(index, 1);
     this.toastr.success('Success', 'Remove product successfully!');
-  
   }
   resetAll() {
     this.myCart = [];
@@ -73,17 +73,20 @@ export class ProductService {
       fullname: '',
       address: '',
       cardNumber: '',
-    }
+    };
   }
   augmentPrtoduct(index: number) {
     this.myCart[index].quantity = this.myCart[index].quantity + 1;
-    this.sumTotal()
+    this.sumTotal();
   }
-  decreaseProduct(index: number){
+  decreaseProduct(index: number) {
     this.myCart[index].quantity = this.myCart[index].quantity - 1;
-     if(this.myCart[index].quantity < 1){
-      this.myCart.splice(index , 1)
-     }
-     this.sumTotal()
+    if (this.myCart[index].quantity < 1) {
+      this.myCart.splice(index, 1);
+    }
+    this.sumTotal();
+  }
+  saveCurrentCard(card: string) {
+    this.currentCart = card;
   }
 }
